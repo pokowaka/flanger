@@ -10,23 +10,34 @@
  */
 angular
   .module('flangerApp', [
+    'angular.filter',
     'ngResource',
     'ngRoute',
     'ngTouch',
-    'jsonrpc'
+    'jsonrpc',
+    'rt.encodeuri',
+    'ui.bootstrap',
+    'infinite-scroll',
+    'pasvaz.bindonce',
+    'bgDirectives'
   ])
-  .config(function ($routeProvider, jsonrpcProvider) {
-    jsonrpcProvider.setBasePath('http://mubunti:8080/jsonrpc');
+  .constant('PLAYER_EVENTS', {
+    properties : 'player-events-properties',
+    item       : 'player-events-item',
+    play       : 'player-events-play',
+  })
+  .constant('config', {
+    baseUrl : 'http://192.168.1.178:9292/mubunti:8080'
+  })
+  .config(function ($routeProvider, jsonrpcProvider, config) {
+    jsonrpcProvider.setBasePath(config.baseUrl + '/jsonrpc');
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+        templateUrl: 'views/artist.html',
+        controller: 'ArtistCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+  ;

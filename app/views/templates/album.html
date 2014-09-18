@@ -1,0 +1,15 @@
+
+<div class="albumthumbnail" ng-style="{'background-image': 'url(' +  albumimg + ')'}" >
+  <div>
+    <button ng-click="play()" type="button" class="btn btn-album btn-circle">&nbsp;<span class="glyphicon glyphicon-play"></span></button>
+    <button ng-click="add()" type="button" class="btn btn-album btn-circle"><span class="glyphicon glyphicon-plus"></span></button>
+  </div>
+</div>
+<!-- <span class="glyphicon glyphicon-heart"></span>
+  <span class="glyphicon glyphicon-heart-empty"></span>
+  <span class="glyphicon glyphicon-plus"></span> -->
+<div bindonce class="caption">
+<h6 class="nobottommargin" bo-text="album.title"></h6>
+<small class="notopmargin" bo-text="subtitle"></small>
+</div>
+</div>
