@@ -4,15 +4,22 @@
     <meta charset="utf-8">
     <title>Flanger..</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css" />
+    <link rel="stylesheet" href="bower_components/ng-infinite-iscroll/nite-iscroll.css" />
     <!-- endbower -->
     <!-- endbuild -->
+    <link rel="styleSheet" href="lib/uigrid/ui-grid-unstable.css"/>
+
+
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/flipper.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
   <body ng-app="flangerApp">
@@ -22,9 +29,28 @@
     <!-- Add your site or application content here -->
  
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        ...
-      </div>
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#">music</a></li>
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Pink Floyd">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">artists</a></li>
+            <li><a href="#">genres</a></li>
+            <li><a href="#">albums</a></li>
+            <li><a href="#">songs</a></li>
+            <li><a href="#">playlists</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
     </nav>
 
     <div class="container-fluid" >
@@ -41,8 +67,9 @@
             <img class="pull-left media-object thumbnail nobottommargin" width="60px" height="60px" 
             ng-src="http://mubunti:8080/image/{{current.thumbnail|encodeUri}}"/>
             <div class="media-body">
-              <h6 class="media-heading">{{current.label}}</h6>
-              <progressbar animate="false" value="info.percentage" type="success"></progressbar>
+              <h6 class="media-heading"><timecycle set="[current.label, current.displayartist, current.album]" delay="5000"></h6>
+              <!-- <progressbar class="slider" animate="false" value="info.percentage" type="success"></progressbar> -->
+                <slider class="col-xs-12" ng-disabled="" ng-model="info.percentage" min="0" step="1" max="100" tooltip="hide" ></slider>
               <h6 class="media-heading pull-left "><small>{{time.format("mm:ss")}}</small></h6>
               <h6 class="media-heading pull-right"><small>-{{timeleft.format('mm:ss')}}</small></h6>
 
@@ -53,10 +80,10 @@
           <!-- Your Footer Content -->
           <span class="btn-circle glyphicon glyphicon-repeat"></span>
           <span class="btn-circle glyphicon glyphicon-random"></span>
-          <button ng-click="prev()" type="button" class="btn btn-default btn-circle"><span class="glyphicon glyphicon-fast-backward"></span></button>
+          <button ng-click="prev()" on-long-press="seek('smallbackward')" type="button" class="btn btn-default btn-circle"><span class="glyphicon glyphicon-fast-backward"></span></button>
           <button ng-click="togglePlay()" ng-show="!playing" type="button" class="btn-lg btn-default btn-circle"><span class="glyphicon glyphicon-play"></span></button>
           <button ng-click="togglePlay()" ng-show="playing" type="button" class="btn-lg btn-default btn-circle"><span class="glyphicon glyphicon-pause"></span></button>
-          <button ng-click="next()" type="button" class="btn btn-default btn-circle"><span class="glyphicon glyphicon-fast-forward"></span></button>
+          <button ng-click="next()" on-long-press="seek('smallforward')" type="button" class="btn btn-default btn-circle"><span class="glyphicon glyphicon-fast-forward"></span></button>
         </div>
       </div>
     </nav>
@@ -71,6 +98,7 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
@@ -80,23 +108,28 @@
     <script src="bower_components/angular-uuid/uuid.min.js"></script>
     <script src="bower_components/angular-jsonrpc/jsonrpc.min.js"></script>
     <script src="bower_components/angular-encode-uri/dist/angular-encode-uri.js"></script>
-    <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/moment-duration-format/lib/moment-duration-format.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
     <script src="bower_components/angular-filter/dist/angular-filter.js"></script>
-    <script src="bower_components/bg-splitter/js/splitter.js"></script>
+    <script src="bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script src="bower_components/angular-bootstrap-slider/slider.js"></script>
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="bower_components/ng-infinite-iscroll/nite-iscroll.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="lib/uigrid/ui-grid-unstable.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/artist.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/player.js"></script>
+        <script src="scripts/controllers/songs.js"></script>
         <script src="scripts/service/dataprovider.js"></script>
         <script src="scripts/directive/directives.js"></script>
+        <script src="scripts/directive/songlist.js"></script>
         <!-- endbuild -->
 </body>
 </html>

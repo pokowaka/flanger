@@ -1,54 +1,26 @@
-<div class="bfill">
-  <div class="col-lg-3 fill" id="artist" >
-    <h4>{{artists.limits.total}} {{artists.limits.total == 1 ? "artist" : "artists"}} <small><cycler set="artistSort" onselect="selectArtistSort" /></small></h4>
-    <div class="xfill">
-      <p ng-click="selectArtist(artist.artistid, $event)" bindonce ng-repeat="artist in artists.artists" bo-text="artist.label"></p>
+<div class="between-navs" >
+  <div  class="fill songWidth">
+    <h4>
+      {{artists.limits.total}} {{artists.limits.total == 1 ? "artist" : "artists"}}
+      <small>
+        <cycler set="artistSort"/>
+        <i ng-show='fetchingArtists' class="fa fa-spinner fa-spin"></i>
+      </small>
+    </h4>
+    <div style="position:absolute; top: 40px; bottom: 0px; width:200px; ">
+      <infinite-list request-data="getArtists"  row-template="'<p class=\'song-text\'>{{item.label}}</p>'" refresh="'artistSort.selected'" />
     </div>
   </div>
-
-  <div class="col-lg-6 fill">
-    <h4>{{albums.limits.total}} {{albums.limits.total == 1 ? "album" :"albums"}} <small><cycler set="albumSort" onselect="selectAlbumSort" /></small></h4>
-    <div class="xfill">
-      <div infinite-scroll='loadMoreAlbums()' infinite-scroll-distance='2' infinite-scroll-disabled='fetching ? true : albums.albums.length == albums.limits.total'>
-        <div ng-switch on="albumSort.selected">
-          <div ng-switch-when="0">
-            <ul>
-              <li style="display: inline-block; margin: 10px;" ng-repeat="album in albums.albums">
-              <album  album="album" subtitle="album.displayartist" />
-            </li>
-          </ul>
-          </div>
-          <!-- Grouping by year -->
-          <div ng-switch-when="1">
-            <div bindonce ng-repeat="(key, value) in albums.albums | groupBy: 'year'">
-              <h3>{{key}}</h3>
-              <album ng-repeat="album in value" album="album" subtitle="album.displayartist" />
-            </div>
-          </div>
-          <!-- Group by artist -->
-          <div ng-switch-when="2">
-            <div bindonce ng-repeat="(key, value) in albums.albums | groupBy: 'displayartist'">
-              <h3>{{key}}</h3>
-              <album ng-repeat="album in value" album="album" subtitle="album.year" />
-            </div>
-          </div>
-          <!-- Group by date added -->
-          <div ng-switch-when="3" ng-switch-when="3">
-            <album ng-repeat="album in albums.albums" album="album" subtitle="album.displayartist" />
-          </div>
-        </div>
-      </div>
-      <div ng-show='fetching'><em>Loading data...</em></div>
-    </div>
-  </div>
-
-  <div class="col-lg-3 fill">
-    <h4>{{songs.limits.total}} {{songs.limits.total == 1 ? "song" : "songs"}} <small><cycler set="songSort" onselect="selectSongSort" /></small></h4>
-    <div class="xfill">
-      <div infinite-scroll='loadMoreSongs()' infinite-scroll-distance='2' infinite-scroll-disabled='fetchingSongs ? true : songs.songs.length == songs.limits.total'>
-        <p bindonce ng-repeat="song in songs.songs" bo-text="song.title"> </p>
-        <div ng-show='fetchingSongs'><em>Loading data...</em></div>
-      </div>
+  <div  class="fill songWidth">
+    <h4>
+      {{songs.limits.total}} {{songs.limits.total == 1 ? "song" : "songs"}}
+      <small>
+        <cycler set="songSort"/>
+        <i ng-show='fetchingSongs' class="fa fa-spinner fa-spin"></i>
+      </small>
+    </h4>
+    <div style="position:absolute; top: 40px; bottom: 0px; width:200px; ">
+      <infinite-list request-data="getSongs" row-template-url="'views/templates/songrow.html'" refresh="'songSort.selected'"/>
     </div>
   </div>
 </div>

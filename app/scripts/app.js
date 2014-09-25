@@ -11,33 +11,41 @@
 angular
   .module('flangerApp', [
     'angular.filter',
+    'jsonrpc',
     'ngResource',
     'ngRoute',
     'ngTouch',
-    'jsonrpc',
+    'pasvaz.bindonce',
     'rt.encodeuri',
     'ui.bootstrap',
-    'infinite-scroll',
-    'pasvaz.bindonce',
-    'bgDirectives'
+    'ui.bootstrap-slider',
+    'ui.grid',
+    'pokowaka.ng-infinite-iscroll'
   ])
   .constant('PLAYER_EVENTS', {
     properties : 'player-events-properties',
     item       : 'player-events-item',
     play       : 'player-events-play',
   })
-  .constant('config', {
-    baseUrl : 'http://192.168.1.178:9292/mubunti:8080'
-  })
-  .config(function ($routeProvider, jsonrpcProvider, config) {
-    jsonrpcProvider.setBasePath(config.baseUrl + '/jsonrpc');
+  .config(function ($routeProvider, jsonrpcProvider) {
+    var full = location.protocol+'//'+location.hostname + ':9292'; //+(location.port ? ':'+location.port: '');
+    var baseUrl = full + '/192.168.1.146:8080';
+
+    jsonrpcProvider.setBasePath(baseUrl + '/jsonrpc');
     $routeProvider
-      .when('/', {
+      .when('/artist', {
         templateUrl: 'views/artist.html',
         controller: 'ArtistCtrl'
       })
+      .when('/songs', {
+        templateUrl: 'views/songs.html',
+        controller: 'SongCtrl'
+      })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/artist'
       });
   })
-  ;
+  .run(function($location) {
+    //FastClick.attach(document.body);
+  });
+ 

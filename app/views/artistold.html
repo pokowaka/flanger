@@ -1,0 +1,84 @@
+  <!-- 
+  <div class="fill col-xs-3">
+    <h4>{{artists.limits.total}} {{artists.limits.total == 1 ? "artist" : "artists"}} <small><cycler set="artistSort" onselect="selectArtistSort" /></small></h4>
+    <div class="fill-height scrollme" ng-scrollbar>
+      <ul class="list-group">
+        <a class="list-group-item" ng-click="selectArtist(artist.artistid, $event)" bindonce ng-repeat="artist in artists.artists" bo-text="artist.label">
+        </a>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fill col-xs-6">
+    <h4>{{albums.limits.total}} {{albums.limits.total == 1 ? "album" :"albums"}} 
+      <small>
+        <cycler set="albumSort" onselect="selectAlbumSort" /> <i ng-show='fetching' class="fa fa-spinner fa-spin"></i>
+      </small>
+    </h4>
+    <div class="fill-height">
+      <div >
+        <div ng-switch on="albumSort.selected">
+          <div ng-switch-when="0">
+            <ul class="album-list">
+              <li class="album-list-item" ng-repeat="album in albums.albums">
+              <album  onselect="selectAlbum" album="album" subtitle="album.displayartist" />
+            </li>
+          </ul>
+          </div>
+          <!-- Grouping by year -->
+          <div ng-switch-when="1">
+            <div bindonce ng-repeat="(key, value) in albums.albums | groupBy: 'year'">
+              <h3>{{key}}</h3>
+              <ul class="album-list">
+                <li class="album-list-item" ng-repeat="album in value">
+                <album  album="album" subtitle="album.displayartist" />
+                </li>
+            </ul>
+            </div>
+          </div>
+          <!-- Group by artist -->
+          <div ng-switch-when="2">
+            <div bindonce ng-repeat="(key, value) in albums.albums | groupBy: 'displayartist'">
+              <h3>{{key}}</h3>
+              <ul class="album-list">
+                <li class="album-list-item" ng-repeat="album in value">
+                <album  album="album" subtitle="album.displayartist" />
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Group by date added -->
+          <div ng-switch-when="3" ng-switch-when="3">
+              <ul class="album-list">
+                <li class="album-list-item" ng-repeat="album in albums.albums">
+                <album  album="album" subtitle="album.displayartist" />
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ -->
+  <div  class="fill songWidth">
+    <h4>
+      {{songs.limits.total}} {{songs.limits.total == 1 ? "song" : "songs"}}
+      <small>
+        <cycler set="songSort"/>
+        <i ng-show='fetchingSongs' class="fa fa-spinner fa-spin"></i>
+      </small>
+    </h4>
+    <longlist request-data="getSongs" row-template-url="'views/templates/songrow.html'" refresh="'songSort.selected'"/>
+  </div>
+  <div  class="fill songWidth">
+    <h4>
+      {{albums.limits.total}} {{albums.limits.total == 1 ? "album" : "albums"}}
+      <small>
+        <cycler set="albumSort"/>
+        <i ng-show='fetchingAlbums' class="fa fa-spinner fa-spin"></i>
+      </small>
+    </h4>
+    <longlist request-data="getAlbums" row-template="'<album album=\'item\' subtitle=\'album.displayartist\'/>'" refresh="'albumSort.selected'"/>
+  </div>
+
+

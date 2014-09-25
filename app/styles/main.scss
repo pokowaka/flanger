@@ -14,34 +14,34 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 html {
   position: relative;
   min-height: 100%;
+  height: 100%;
+  overflow: hidden;
 }
+
 body {
-  /* Margin bottom by footer height */
-   padding-top: 70px; 
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
+
 .bbl {
   border:1px solid blue;
 }
 
-.bfill { 
+.between-navs { 
   position:absolute;
   top:50px;
-  bottom:111px;
+  bottom:70px;
 }
 
 .progress {
   margin-bottom: 5px;
 }
-.xfill {
-  overflow-x:hidden;
-  overflow-y: scroll;
-  height: 100%;
-}
+
 .fill { 
-    height:100%;
+    height:600px;
+    width:300px;
 }
-
-
 
 // Circles buttons that we use for player control.
 .btn-circle {
@@ -53,8 +53,23 @@ body {
   line-height: 1.428571429;
   border-radius: 15px;
   outline:none;
-}
 
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.btn-circle:active {
+  outline:none;
+}
+.btn-circle:active:focus {
+  outline:none;
+}
+.btn-circle:focus {
+  outline:none;
+}
 .btn-circle.btn-lg {
   width: 50px;
   height: 50px;
@@ -75,9 +90,6 @@ body {
   outline: none;
 }
 
-.btn-album {
-  background-color: green;
-}
 
 
 // css related to albums
@@ -94,24 +106,6 @@ body {
 .notopmargin {
   margin-top : 0px;
 }
-.rotate {
-
-/* Safari */
--webkit-transform: rotate(-90deg);
-
-/* Firefox */
--moz-transform: rotate(-90deg);
-
-/* IE */
--ms-transform: rotate(-90deg);
-
-/* Opera */
--o-transform: rotate(-90deg);
-
-/* Internet Explorer */
-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-
-}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
@@ -126,8 +120,129 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
 
-.albumlist {
+.album-list {
+ margin-left: 0px;
+ padding-left: 0px;
+ padding-right: 0px;
+}
+
+.album-list-item {
   display:inline-block;
   margin-right: 10px;
   margin-bottom: 10px;
+}
+
+.album-img {
+  width: 140px;
+  height: 140px;
+  overflow: hidden;
+  position: relative;
+}
+
+
+.album-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-album {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+}
+
+.smalltext {
+  font-size: 80%;
+}
+
+
+/* back, initially hidden pane */
+.album-controls {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  //transform: rotateY(180deg);
+  transition:visibility 1s, opacity 1s;
+  visibility:hidden;
+  opacity:0;
+}
+
+.album-img:hover > div {
+  visibility:visible;
+  opacity:1
+}
+
+
+.album-selected {
+  border: 2px solid #bbb;
+}
+
+
+.album-buttons {
+  position: absolute;
+  left: 40px;
+  bottom: 10px;
+}
+
+.song-grid {
+  top: 50px;
+  left: 20px;
+  right: 20px;
+  height: 500px;
+  bottom: 111px;
+}
+
+.slider.slider-horizontal {
+  width: 100%;
+  margin-right: 20px;
+  height: 20px;
+}
+//#d0e9c6
+.slider-selection {
+  background-image: none;
+  background-color: #d0e9c6;
+}
+
+.slider-handle {
+  background-color: #3c763d;
+  background-image: none;
+}
+
+.songGrid {
+  width: 500px;
+  height: 300px;
+}
+
+.ui-grid {
+  border: none;
+}
+
+.ui-grid-top-panel {
+  line-height: 1.42857143;
+  font-weight: bold;
+}
+
+.scrollfix {
+  -webkit-overflow-scrolling: touch;
+}
+
+.songWidth {
+  width: 300px;
+  display: inline-block;
+}
+
+.scrollme {
+	overflow: hidden;
+	-webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; /* jquery ui resizable bug: http://bugs.jqueryui.com/ticket/8932 */
 }

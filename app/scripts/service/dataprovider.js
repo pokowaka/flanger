@@ -10,6 +10,12 @@ angular.module('flangerApp').service('audioLibraryService', function(jsonrpc) {
     this[functions[i].charAt(0).toLowerCase() + functions[i].slice(1)] = service.createMethod(functions[i]);
   };
 })
+.service('counterService', function() {
+  var counter = 0;
+  this.next = function() {
+    return counter++;
+  };
+})
 .service('playerService', function(jsonrpc) {
   var functions = ['GetActivePlayers', 'GetItem', 'GetProperties', 'GoTo', 'Move', 'Open', 'PlayPause',
   'Rotate', 'Seek', 'SetAudioStream', 'SetPartymode', 'SetRepeat', 'SetShuffle', 'SetSpeed', 'SetSubtitle', 'Stop', 'Zoom'];
@@ -27,7 +33,7 @@ angular.module('flangerApp').service('audioLibraryService', function(jsonrpc) {
 })
 .service('player', function($rootScope, $timeout, playerService, playlistService, PLAYER_EVENTS) {
   var scope = this;
-  var pollaggression = 500;
+  var pollaggression = 50000;
   this.currentItem = null;
   this.playerid = null;
   this.properties = null;
